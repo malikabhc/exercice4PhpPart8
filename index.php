@@ -1,9 +1,3 @@
-<?php
-if (!empty($_POST['login']) && !empty($_POST['password'])) {
-    setcookie('login', $_POST['login'], time() + 365 * 24 * 3600, null, null, false);
-    setcookie('password', $_POST['password'], time() + 365 * 24 * 3600, null, null, false);
-}
-?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -18,9 +12,20 @@ if (!empty($_POST['login']) && !empty($_POST['password'])) {
             <input type="text" name="password" id="password" placeholder="Mot de passe"/>
             <input type="submit" name="submit" value="Valider">
         </form>
-        <?php if (!empty($_POST['login'])) { ?>
-            <p>L'identifiant est <?= $_COOKIE['login']; ?></p>
-        <?php } if (!empty($_POST['password'])) { ?>
-        <p>Le mot de passe est <?= $_COOKIE['password']; } ?></p>
+        <?php
+        // si le cookie pseudo ne contient pas de pseudo
+        if (empty($_COOKIE['login'])) { ?>
+            <p>Pseudo non défini</p>  
+        <?php } else { ?>
+            <p>Votre pseudo : <?= $_COOKIE['login']; ?></p>
+        <?php } ?>
+        <?php
+        // si le cookie ne contient pas de mot de passe
+        if (empty($_COOKIE['password'])) {
+            ?>
+            <p>Mot de passe non défini</p>
+        <?php } else { ?>
+            <p>Votre mot de passe : <?= $_COOKIE['password']; ?></p>
+<?php } ?>
     </body>
 </html>
